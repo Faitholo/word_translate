@@ -10,8 +10,8 @@
         {% block title %}Word Translator{% endblock %}
         {% block content %}
           <div class="form-wrapper">
-            <form method="post" class="form" action="/azure">
-              <h3 class="form-heading">Enter a word and select language to translate</h3>
+            <form method="post" class="form" action="/translate">
+              <h4 class="form-heading">Enter a word or sentence and select language to translate</h4>
               <div class="form-group">
                 <label for="name">Word</label>
                 {{ form.lang(class_ = 'form-control', autofocus = true) }}
@@ -26,10 +26,6 @@
                </div>
               <input type="submit" value="Search" class="btn btn-primary btn-lg btn-block">
             </form>
-          </div>
-
-          <div>
-            <p>Translation: {{ result[0] }}
           </div>
         {% endblock %}
     </div>

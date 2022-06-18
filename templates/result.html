@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Word</title>
+</head>
+
+<body>
+    <div>
+        {% block title %}Word Translator{% endblock %}
+        {% block content %}
+          <div class="form-wrapper">
+            <form method="post" class="form" action="/translate">
+              <h4 class="form-heading">Enter a word or sentence and select language to translate</h4>
+              <div class="form-group">
+                <label for="name">Word</label>
+                {{ form.lang(class_ = 'form-control', autofocus = true) }}
+              </div>
+              <div class="form-group">
+                  <label>Language</label>
+                  <div class="form-inline">
+                    <div class="form-group">
+                      {{ form.translate(class_ = 'form-control', placeholder='Language', autofocus = true) }}
+                    </div>
+                </div>
+               </div>
+              <input type="submit" value="Search" class="btn btn-primary btn-lg btn-block">
+            </form>
+          </div>
+
+          <div>
+            <p>Translation: {{ result[0] }}</p>
+          </div>
+        {% endblock %}
+    </div>
+</body>
+</html>

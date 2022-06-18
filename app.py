@@ -5,8 +5,11 @@ import requests, uuid
 from flask_wtf import Form
 from forms import *
 import os
-
 import urllib.request, json
+from requests.adapters import HTTPAdapter
+
+s = requests.Session()
+s.mount('https://api.cognitive.microsofttranslator.com', HTTPAdapter(max_retries=5))
 
 from dotenv import load_dotenv
 load_dotenv('/home/faith/dictionary_api/.env')
@@ -26,57 +29,15 @@ def home():
     
     return render_template('index.html')
 
-"""
-@app.route('/word', methods=['GET'])
+
+@app.route('/translate', methods=['GET'])
 def get_word():
     form = Language()
-    return render_template('list.html', form=form)
-    
-    #url = "https://od-api.oxforddictionaries.com/api/v2/entries/en-gb/father?fields=etymologies&strictMatch=false"
-    #r = requests.get(url, headers = {"app_id": app_id, "app_key": app_key})
-    
-    #d_text = r.json()
-    
-    #abc = d_text["results"]
-    #data = []
-    #for i in abc:
-        #data.append(i)
-    
-    #return render_template('list.html', data=data)
-    
-    
-    #j_form = json.dumps(r.json())
-    
-    #print("code {}\n".format(r.status_code))
-    #print("text \n" + r.text)
-    #print("json \n" + json.dumps(r.json()))
-    
-    
-    
-    #return d_text
-
-    
-@app.route('/word', methods=['POST'])
-def def_word():
-    form = Language()
-    data = form.lang.data
-    trans = form.translate.data
-    url = "https://od-api.oxforddictionaries.com/api/v2/translations/en/{}/{}?strictMatch=false".format(trans, data)
-    r = requests.get(url, headers = {"app_id": app_id, "app_key": app_key})
-    
-    
-    d_text = r.json()
-    return d_text
-"""
+    return render_template('translate.html', form=form)
 
 
-@app.route('/azure', methods=['GET'])
-def azure_word():
-    form = Language()
-    return render_template('azure.html', form=form)
-
-@app.route('/azure', methods=['POST'])
-def azure_translate():
+@app.route('/translate', methods=['POST'])
+def translate_word():
     key = os.environ.get('key_var_name')
     endpoint = "https://api.cognitive.microsofttranslator.com"
 
@@ -103,30 +64,55 @@ def azure_translate():
         'X-ClientTraceId': str(uuid.uuid4())
     }
 
-    # You can pass more than one object in body.
     body = [{
         'text': speech
     }]
 
+
     request = requests.post(constructed_url, params=params, headers=headers, json=body)
     response = request.json()
 
-    dat = json.dumps(response, sort_keys=True, skipkeys=True, ensure_ascii=False, indent=4, separators=(',', ': '))
-    datt = json.loads(dat)
+    get_data = json.dumps(response, sort_keys=True, skipkeys=True, ensure_ascii=False, indent=4, separators=(',', ': '))
+    data_response = json.loads(get_data)
     
     data = []
-    for i in datt:
-        for a in i:
-            dattt = i[a]
-            for o in dattt:
-                data1 = o
+    for item in data_response:
+        for each in item:
+            data1 = item[each]
+            for data2 in data1:
+                data3 = data2
                 
-                for r in data1:
-                    data.append(data1[r])
+                for each_item in data3:
+                    data.append(data3[each_item])
 
     
-    return render_template('azure.html', result=data, form=form)
+    return render_template('result.html', result=data, form=form)
 
+
+@app.errorhandler(404)
+def not_found(error):
+    return (
+        jsonify({"success": False, "error": 404, "message": "Resource not found"}),
+        404,
+    )
+
+@app.errorhandler(422)
+def unprocessable(error):
+    return (
+        jsonify({"success": False, "error": 422, "message": "Unprocessable"}),
+        422,
+    )
+
+@app.errorhandler(400)
+def bad_request(error):
+    return jsonify({"success": False, "error": 400, "message": "Bad request"}), 400
+
+@app.errorhandler(405)
+def not_found(error):
+    return (
+        jsonify({"success": False, "error": 405, "message": "Method not allowed"}),
+        405,
+    )
 
 if __name__ == '__main__':
     app.run(debug=True)
