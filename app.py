@@ -5,8 +5,11 @@ import requests, uuid
 from flask_wtf import Form
 from forms import *
 import os
+from flask_migrate import Migrate
+from flask_sqlalchemy import SQLAlchemy
 import urllib.request, json
 from requests.adapters import HTTPAdapter
+from models import db, Quiz
 
 s = requests.Session()
 s.mount('https://api.cognitive.microsofttranslator.com', HTTPAdapter(max_retries=5))
@@ -20,12 +23,17 @@ app = Flask(__name__)
 app_id  = os.environ.get('ID')
 app_key  = os.environ.get('API_KEY2')
 app.secret_key = os.environ.get('SECRET_KEY')
+db_password = os.environ.get("DB_PASSWORD")
+
+app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql:///Quiz'
+db = SQLAlchemy(app)
+migrate = Migrate(app, db)
+
 
 
 @app.route('/')
 def home():
-    url = "https://od-api.oxforddictionaries.com/api/v2/translations/en/id/father?strictMatch=false"
-    r = requests.get(url, headers = {"app_id": app_id, "app_key": app_key})
+    quiz = Quiz.query.all()
     
     return render_template('index.html')
 
