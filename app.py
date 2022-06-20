@@ -1,10 +1,11 @@
 from distutils.debug import DEBUG
 import json
-from flask import Flask, render_template, url_for, jsonify, request
+from flask import Flask, render_template, url_for, jsonify, request, flash, abort
 import requests, uuid
 from flask_wtf import Form
 from forms import *
 import os
+from flask_cors import CORS
 from flask_migrate import Migrate
 from flask_sqlalchemy import SQLAlchemy
 import urllib.request, json
@@ -28,14 +29,28 @@ db_password = os.environ.get("DB_PASSWORD")
 app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql:///Quiz'
 db = SQLAlchemy(app)
 migrate = Migrate(app, db)
+CORS(app, resources={r"/api/*": {"origins": "*"}})
+
+
+# CORS Headers
+@app.after_request
+def after_request(response):
+    response.headers.add(
+        "Access-Control-Allow-Headers", "Content-Type,Authorization,true"
+    )
+    response.headers.add(
+        "Access-Control-Allow-Methods", "GET,PUT,POST,DELETE,OPTIONS"
+    )
+    return response
 
 
 
 @app.route('/')
 def home():
     quiz = Quiz.query.all()
+    form = Question()
     
-    return render_template('index.html')
+    return render_template('index.html', quiz=quiz, form=form)
 
 
 @app.route('/translate', methods=['GET'])
@@ -95,6 +110,39 @@ def translate_word():
 
     
     return render_template('result.html', result=data, form=form)
+
+
+
+@app.route('/create', methods=['GET'])
+def create_quiz():
+  form = Question()
+  return render_template('index.html', form=form)
+
+@app.route('/create', methods=['POST'])
+def create_quiz_submission():
+  
+  # Request data from the Venue Form
+  if request.method == "POST":
+    form = Question()
+    quiz = Quiz(question = form.question.data,
+                A = form.A.data,
+                B = form.B.data,
+                C = form.C.data,
+                D = form.D.data,
+                answer = form.answer.data
+                )
+    # Add and commit the received form input
+    db.session.add(quiz)
+    db.session.commit()
+    flash('Question: ' + request.form['question'] + ' was successfully listed!')
+
+    db.session.close()
+  else:
+    flash('An error occurred. Question: ' + request.form['question'] + ' could not be listed!')
+    db.session.rollback()
+  
+  return render_template('index.html', form=form)
+  
 
 
 @app.errorhandler(404)

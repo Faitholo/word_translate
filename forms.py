@@ -29,3 +29,23 @@ class Language(Form):
             ('zu', 'zu'),
         ]
     )
+    
+class Question(Form):
+    question = StringField(
+        'question', validators=[DataRequired()]
+    )
+    A = StringField(
+        'A', validators=[DataRequired()]
+    )
+    B = StringField(
+        'B', validators=[DataRequired()]
+    )
+    C = StringField(
+        'C', validators=[DataRequired()]
+    )
+    D = StringField(
+        'D', validators=[DataRequired()]
+    )
+    answer = StringField(
+        'answer', validators=[DataRequired()]
+    )
