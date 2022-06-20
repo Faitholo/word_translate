@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title></title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="">
+    </head>
+    <body>
+        <div>
+            <a href="/"><h2>Home</h2></a>
+        </div>
+        <a href="/translate"><h2>Add quiz questions</h2></a>
+        {% block content%}
+        <div class="form-group">
+            <form method="post" class="form" action="/create">
+                <label>Question</label>
+                <div class="form-inline">
+                <div class="form-group">
+                    {{ form.question(class_ = 'form-control', placeholder='question', autofocus = true) }}
+                </div>
+                <div class="form-group">
+                    {{ form.A(class_ = 'form-control', placeholder='option_a', autofocus = true) }}
+                </div>
+                <div class="form-group">
+                    {{ form.B(class_ = 'form-control', placeholder='option_b', autofocus = true) }}
+                </div>
+                <div class="form-group">
+                    {{ form.C(class_ = 'form-control', placeholder='option_c', autofocus = true) }}
+                </div>
+                <div class="form-group">
+                    {{ form.D(class_ = 'form-control', placeholder='option_d', autofocus = true) }}
+                </div>
+                <div class="form-group">
+                    {{ form.answer(class_ = 'form-control', placeholder='answer', autofocus = true) }}
+                </div>
+                </div>
+                <input type="submit" value="Create Question" class="btn btn-primary btn-lg btn-block">
+            </form>
+        </div>
+        {% endblock %}
+    </body>
+</html>

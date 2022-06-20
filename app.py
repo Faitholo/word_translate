@@ -12,8 +12,8 @@ import urllib.request, json
 from requests.adapters import HTTPAdapter
 from models import db, Quiz
 
-s = requests.Session()
-s.mount('https://api.cognitive.microsofttranslator.com', HTTPAdapter(max_retries=5))
+#s = requests.Session()
+#s.mount('https://api.cognitive.microsofttranslator.com', HTTPAdapter(max_retries=5))
 
 from dotenv import load_dotenv
 load_dotenv('/home/faith/dictionary_api/.env')
@@ -47,10 +47,8 @@ def after_request(response):
 
 @app.route('/')
 def home():
-    quiz = Quiz.query.all()
-    form = Question()
     
-    return render_template('index.html', quiz=quiz, form=form)
+    return render_template('index.html')
 
 
 @app.route('/translate', methods=['GET'])
@@ -116,7 +114,7 @@ def translate_word():
 @app.route('/create', methods=['GET'])
 def create_quiz():
   form = Question()
-  return render_template('index.html', form=form)
+  return render_template('questions.html', form=form)
 
 @app.route('/create', methods=['POST'])
 def create_quiz_submission():
@@ -141,8 +139,16 @@ def create_quiz_submission():
     flash('An error occurred. Question: ' + request.form['question'] + ' could not be listed!')
     db.session.rollback()
   
-  return render_template('index.html', form=form)
+  return render_template('questions.html', form=form)
   
+
+@app.route('/quiz')
+def play_quiz():
+    quiz = Quiz.query.all()
+    form = Question()
+    
+    return render_template('quiz.html', form=form, quiz=quiz)
+
 
 
 @app.errorhandler(404)

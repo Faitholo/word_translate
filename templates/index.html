@@ -9,48 +9,9 @@
         <link rel="stylesheet" href="">
     </head>
     <body>
+        <a href="/quiz"><h2>Play Quiz</h2></a>
         <a href="/translate"><h2>Translate</h2></a>
-        <h2>Play Game</h1>
 
-            {% block quiz %}
-            {% for qui in quiz %}
-            {{ qui.question }}
-                <div class="question"><input type="radio" name="Question">{{ qui.A }}</div> 
-                <div class="question"><input type="radio" name="Question">{{ qui.B }}</div>
-                <div class="question"><input type="radio" name="Question">{{ qui.C }}</div>
-                <div class="question"><input type="radio" name="Question">{{ qui.D }}</div>
-            {% endfor%} 
-            {% endblock %}
-
-
-        {% block content%}
-        <div class="form-group">
-            <form method="post" class="form" action="/create">
-                <label>Question</label>
-                <div class="form-inline">
-                <div class="form-group">
-                    {{ form.question(class_ = 'form-control', placeholder='question', autofocus = true) }}
-                </div>
-                <div class="form-group">
-                    {{ form.A(class_ = 'form-control', placeholder='option_a', autofocus = true) }}
-                </div>
-                <div class="form-group">
-                    {{ form.B(class_ = 'form-control', placeholder='option_b', autofocus = true) }}
-                </div>
-                <div class="form-group">
-                    {{ form.C(class_ = 'form-control', placeholder='option_c', autofocus = true) }}
-                </div>
-                <div class="form-group">
-                    {{ form.D(class_ = 'form-control', placeholder='option_d', autofocus = true) }}
-                </div>
-                <div class="form-group">
-                    {{ form.answer(class_ = 'form-control', placeholder='answer', autofocus = true) }}
-                </div>
-                </div>
-                <input type="submit" value="Create Question" class="btn btn-primary btn-lg btn-block">
-            </form>
-        </div>
-        {% endblock %}
         <script src="" async defer></script>
     </body>
 </html>
