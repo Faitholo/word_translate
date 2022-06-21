@@ -15,12 +15,17 @@
         {% block quiz %}
         {% for item in quiz %}
         {{ item.question }}
-            <div class="option"><input type="radio" name="Question">{{ item.A }}</div> 
-            <div class="option"><input type="radio" name="Question">{{ item.B }}</div>
-            <div class="option"><input type="radio" name="Question">{{ item.C }}</div>
-            <div class="option"><input type="radio" name="Question">{{ item.D }}</div>
+            <div class="option">A: {{ item.A }}</div> 
+            <div class="option">B: {{ item.B }}</div>
+            <div class="option">C: {{ item.C }}</div>
+            <div class="option">D: {{ item.D }}</div>
+            <div class="form-group">
+                {{ form.answer(class_ = 'form-control', placeholder='answer', autofocus = true) }}
+            </div>
         {% endfor%}
-        <input type="submit" value="Submit" class="btn btn-primary btn-lg btn-block"> 
+        <input type="submit" value="Submit" class="btn btn-primary btn-lg btn-block">
         {% endblock %}
+        
+        <script src="/home/faith/word_translate/static/index.js"></script>
     </body>
 </html>

@@ -13,3 +13,14 @@ class Quiz(db.Model):
     C = db.Column(db.String(120))
     D = db.Column(db.String(120))
     answer = db.Column(db.String(120))
+    
+
+    def format(self):
+        return {
+            'id': self.id,
+            'question': self.question,
+            'A': self.A,
+            'B': self.B,
+            'C': self.C,
+            'D': self.D
+            }

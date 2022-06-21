@@ -44,6 +44,22 @@ def after_request(response):
     return response
 
 
+QUESTIONS_PER_PAGE = 1
+
+
+def paginate(request, data):
+    """
+        Pagination function limiting to 1 question per page
+    """
+    page = request.args.get("page", 1, type=int)
+    start = (page - 1) * QUESTIONS_PER_PAGE
+    end = start + QUESTIONS_PER_PAGE
+    formatted_data = [item.format() for item in data]
+
+    return formatted_data[start: end]
+
+
+
 
 @app.route('/')
 def home():
@@ -144,8 +160,12 @@ def create_quiz_submission():
 
 @app.route('/quiz')
 def play_quiz():
-    quiz = Quiz.query.all()
+    get_quiz = Quiz.query.all()
     form = Question()
+    
+    question_per_page = paginate(request, get_quiz)
+    
+    quiz = question_per_page
     
     return render_template('quiz.html', form=form, quiz=quiz)
 
