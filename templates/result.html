@@ -2,34 +2,38 @@
 <html lang="en">
 
 <head>
-    <title>Word</title>
+  <title class="word">Word</title>
+  <link rel="stylesheet" href="../static/styles.css">
 </head>
 
-<body>
-    <div>
-      <a href="/"><h2>Home</h2></a>
-        {% block content %}
-          <div class="form-wrapper">
-            <form method="post" class="form" action="/translate">
-              <h4 class="form-heading">Enter a word or sentence and select language to translate</h4>
-              <div class="form-group">
-                <label for="name">Word</label>
-                {{ form.lang(class_ = 'form-control', autofocus = true) }}
-              </div>
-              <div class="form-group">
-                  <label>Language</label>
-                  <div class="form-inline">
-                    <div class="form-group">
-                      {{ form.translate(class_ = 'form-control', placeholder='Language', autofocus = true) }}
-                    </div>
-                </div>
-               </div>
-              <input type="submit" value="Search" class="btn btn-primary btn-lg btn-block">
+<body class="translate">
+  <div class="nav">
+    <ul>
+      <li><a href="/">Home</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="/translate">Translate</a></li>
+      <li><a href="/quiz">Quiz</a></li>
+  </div>
+  <div class="main">
+    <a href="/"><h2>Home</h2></a>
+      {% block content %}
+        <div class="form-wrapper">
+          <form method="post" class="form" action="/translate">
+            <h4 class="form-heading">Enter a word or sentence and select a language to translate</h4>
+            <div class="form-group">
+              <label form="name">Word</label>
+              {{ form.lang(class_ = 'form-control', autofocus = true) }}
+            </div>
+            <div class="form-group">
+                <label>Select Language</label>
+                {{ form.translate(class_ = 'form-control', placeholder='Language', autofocus = true) }}
+             </div>
+            <input type="submit" value="Search" class="btn btn-primary btn-lg btn-block">
             </form>
           </div>
 
-          <div>
-            <p>Translation: {{ result[0] }}</p>
+          <div class="trans">
+            <h2>Translation: {{ result[0] }}</h2>
           </div>
         {% endblock %}
     </div>

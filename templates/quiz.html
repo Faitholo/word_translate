@@ -6,25 +6,32 @@
         <title></title>
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="stylesheet" href="">
+        <link rel="stylesheet" href="../static/styles.css">
     </head>
-    <body>
-        <div>
-            <a href="/"><h2>Home</h2></a>
+    <body class="quiz">
+        <div class="nav">
+            <ul>
+              <li><a href="/">Home</a></li>
+              <li><a href="#about">About</a></li>
+              <li><a href="/translate">Translate</a></li>
+              <li><a href="/quiz">Quiz</a></li>
         </div>
-        {% block quiz %}
-        {% for item in quiz %}
-        {{ item.question }}
-            <div class="option">A: {{ item.A }}</div> 
-            <div class="option">B: {{ item.B }}</div>
-            <div class="option">C: {{ item.C }}</div>
-            <div class="option">D: {{ item.D }}</div>
-            <div class="form-group">
-                {{ form.answer(class_ = 'form-control', placeholder='answer', autofocus = true) }}
-            </div>
-        {% endfor%}
-        <input type="submit" value="Submit" class="btn btn-primary btn-lg btn-block">
-        {% endblock %}
+        <div class="main">
+            <a href="/"><h2>Home</h2></a>
+            {% block quiz %}
+            {% for item in quiz %}
+            {{ item.question }}
+                <div class="option">A: {{ item.A }}</div> 
+                <div class="option">B: {{ item.B }}</div>
+                <div class="option">C: {{ item.C }}</div>
+                <div class="option">D: {{ item.D }}</div>
+                <div class="form-group">
+                    {{ form.answer(class_ = 'form-control', placeholder='answer', autofocus = true) }}
+                </div>
+            {% endfor%}
+            <input type="submit" value="Submit" class="btn btn-primary btn-lg btn-block">
+            {% endblock %}
+        </div>
         
         <script src="/home/faith/word_translate/static/index.js"></script>
     </body>

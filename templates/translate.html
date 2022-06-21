@@ -2,32 +2,36 @@
 <html lang="en">
 
 <head>
-    <title>Word</title>
+  <title>Word</title>
+  <link rel="stylesheet" href="../static/styles.css">
 </head>
 
-<body>
-    <div>
-      <a href="/"><h2>Home</h2></a>
-        {% block content %}
-          <div class="form-wrapper">
-            <form method="post" class="form" action="/translate">
-              <h4 class="form-heading">Enter a word or sentence and select language to translate</h4>
-              <div class="form-group">
-                <label for="name">Word</label>
-                {{ form.lang(class_ = 'form-control', autofocus = true) }}
+<body class="translate">
+  <div class="nav">
+    <ul>
+      <li><a href="/">Home</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="/translate">Translate</a></li>
+      <li><a href="/quiz">Quiz</a></li>
+  </div>
+  <div class="main">
+    
+      {% block content %}
+        <div class="form-wrapper">
+          <form method="post" class="form" action="/translate">
+            <h4 class="form-heading">Enter a word or sentence and select a language to translate</h4>
+            <div class="form-group">
+              <label form="name">Word</label>
+              {{ form.lang(class_ = 'form-control', autofocus = true) }}
+            </div>
+            <div class="form-group">
+                <label>Select Language</label>
+                {{ form.translate(class_ = 'form-control', placeholder='Language', autofocus = true) }}
               </div>
-              <div class="form-group">
-                  <label>Language</label>
-                  <div class="form-inline">
-                    <div class="form-group">
-                      {{ form.translate(class_ = 'form-control', placeholder='Language', autofocus = true) }}
-                    </div>
-                </div>
-               </div>
-              <input type="submit" value="Search" class="btn btn-primary btn-lg btn-block">
-            </form>
-          </div>
-        {% endblock %}
-    </div>
+            <input type="submit" value="Search" class="btn btn-primary btn-lg btn-block">
+          </form>
+        </div>
+      {% endblock %}
+  </div>
 </body>
 </html>
