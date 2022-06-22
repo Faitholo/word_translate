@@ -43,20 +43,19 @@ def after_request(response):
     )
     return response
 
-
+"""
 QUESTIONS_PER_PAGE = 1
 
 
 def paginate(request, data):
-    """
-        Pagination function limiting to 1 question per page
-    """
+    #Pagination function limiting to 1 question per page
     page = request.args.get("page", 1, type=int)
     start = (page - 1) * QUESTIONS_PER_PAGE
     end = start + QUESTIONS_PER_PAGE
     formatted_data = [item.format() for item in data]
 
     return formatted_data[start: end]
+"""
 
 
 
@@ -73,7 +72,7 @@ def get_word():
     return render_template('translate.html', form=form)
 
 
-@app.route('/translate', methods=['POST'])
+@app.route('/translate', methods=['GET','POST'])
 def translate_word():
     key = os.environ.get('key_var_name')
     endpoint = "https://api.cognitive.microsofttranslator.com"
@@ -156,16 +155,15 @@ def create_quiz_submission():
     db.session.rollback()
   
   return render_template('questions.html', form=form)
-  
 
-@app.route('/quiz')
+ 
+
+@app.route('/quiz', methods=['GET'])
 def play_quiz():
-    get_quiz = Quiz.query.all()
     form = Question()
+    all = Quiz.query.all()
     
-    question_per_page = paginate(request, get_quiz)
-    
-    quiz = question_per_page
+    quiz = all
     
     return render_template('quiz.html', form=form, quiz=quiz)
 
