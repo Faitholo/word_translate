@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <!-- Basic -->
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <!-- Mobile Metas -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+  <link rel="stylesheet" type="text/css"
+    href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.1.3/assets/owl.carousel.min.css" />
+  <link rel="stylesheet" type="text/css" href="static/css/bootstrap.css" />
+  <link href="https://fonts.googleapis.com/css?family=Dosis:400,500|Poppins:400,700&display=swap" rel="stylesheet">
+  <link href="static/css/style.css" rel="stylesheet" />
+  <link href="static/css/responsive.css" rel="stylesheet" />
+</head>
+
+<body class="sub_page">
+  <div class="hero_area">
+    <!-- header section strats -->
+    <header class="header_section">
+      <div class="container-fluid">
+        <nav class="navbar navbar-expand-lg custom_nav-container ">
+          <a class="navbar-brand" href="/">
+            <img src="images/logo.png" alt="">
+            <span>
+              Word Translate
+            </span>
+          </a>
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <div class="d-flex mx-auto flex-column flex-lg-row align-items-center">
+              <ul class="navbar-nav  ">
+                <li class="nav-item active">
+                  <a class="nav-link" href="/">Home <span class="sr-only"></span></a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="#about">About</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="/translate">Translate</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="/quiz">Quiz</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </nav>
+      </div>
+    </header>
+    <!-- end header section -->
+    <!-- slider section -->
+    <section class=" slider_section position-relative">
+      <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+        
+        {% block content %}
+        <div class="container-fluid">
+          <div class="row">
+            <div class="col-md-4 offset-md-2">
+              <div class="slider_detail-box">
+                <h1>
+                  The Words
+                  <span>
+                    Zone
+                  </span>
+                </h1>
+                <p>
+                  Lorem Ipsum is simply dummy text of the printing and
+                  typesetting industry.
+                  Lorem Ipsum has been the industry's standard dummy text ever
+                </p>
+                <div class="btn-box">
+                  <a href="/translate" class="btn-1">
+                    Translate
+                  </a>
+                  <a href="/quiz" class="btn-2">
+                    Play Quiz
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- end header section -->
+
+        
+    {% endblock content%}
+
+
+    {% block footer %}
+    <div class="footer_section">
+      <p>Word Translate &copy; All Rights Reserved.</p>
+    {% endblock footer %}
+    </div>
+  </div>
+
+</body>
+</html>

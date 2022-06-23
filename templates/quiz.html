@@ -1,125 +1,37 @@
-<!DOCTYPE html>
-<html>
+{% extends 'main.html' %}
+{% block head %}
+<style>
+  
+</style>
+{% endblock head%}
 
-<head>
-  <!-- Basic -->
-  <meta charset="utf-8" />
-  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <!-- Mobile Metas -->
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-  <!-- Site Metas -->
-  <meta name="keywords" content="" />
-  <meta name="description" content="" />
-  <meta name="author" content="" />
+{% block content %} 
 
-  <title>Word Zone</title>
-
-  <!-- slider stylesheet -->
-  <link rel="stylesheet" type="text/css"
-    href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.1.3/assets/owl.carousel.min.css" />
-
-  <!-- bootstrap core css -->
-  <link rel="stylesheet" type="text/css" href="static/css/bootstrap.css" />
-
-  <!-- fonts style -->
-  <link href="https://fonts.googleapis.com/css?family=Dosis:400,500|Poppins:400,700&display=swap" rel="stylesheet">
-  <!-- Custom styles for this template -->
-  <link href="static/css/style.css" rel="stylesheet" />
-  <!-- responsive style -->
-  <link href="static/css/responsive.css" rel="stylesheet" />
-  <style>
-    #show,#content {
-        display:none;
-        margin-top: 10px;
-    }
-    #show:checked~#content {
-        display:block;
-    }
-  </style>
-</head>
-
-<body class="sub_page">
-  <div class="hero_area">
-    <!-- header section strats -->
-    <header class="header_section">
-      <div class="container-fluid">
-        <nav class="navbar navbar-expand-lg custom_nav-container ">
-          <a class="navbar-brand" href="/">
-            <img src="images/logo.png" alt="">
-            <span>
-              Word Translate
-            </span>
-          </a>
-          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
-            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-          </button>
-
-          <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <div class="d-flex mx-auto flex-column flex-lg-row align-items-center">
-              <ul class="navbar-nav  ">
-                <li class="nav-item active">
-                  <a class="nav-link" href="/">Home <span class="sr-only"></span></a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="#about">About</a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="/translate">Translate</a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="/quiz">Quiz</a>
-                </li>
-              </ul>
-            </div>
+{% block quiz %}
+  {% for item in quiz %}
+      <p>Question: {{ item.id }}</p>
+      <div>
+          {{ item.question }}
           </div>
-        </nav>
-      </div>
-    </header>
-    <!-- end header section -->
-    <!-- slider section -->
-    <section class=" slider_section2 position-relative">
-      <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
-        
-
-  <div class="container-fluid">
-    <div class="row">
-      <div class="col-md-4 offset-md-2">
-        <div class="slider_detail-box">
-        </div>
-      </div>
-    </div>
-    <div class="main" method="get" action='/quiz'>
-
-        {% block quiz %}
-            {% for item in quiz %}
-                <p>Question: {{ item.id }}</p>
-                <div>
-                    {{ item.question }}
-                    </div>
-                    <div><input type=checkbox class="option">A: {{ item.A }}</input> </div>
-                    <div><input type=checkbox class="option">B: {{ item.B }}</input> </div>
-                    <div><input type=checkbox class="option">C: {{ item.C }}</input> </div>
-                    <div><input type=checkbox class="option">D: {{ item.D }}</input> </div>
-                <div>
-                {% endfor%}
-            <div class="ans">
-                
-            </div>
-        {% endblock %}
-            </div>
-            <div class="btn-box">
-               <a href="" class="btn-1">
-                <input type=checkbox id="show">
-                <label for="show">Submit</label>
-                {% for ans in quiz%}
-                <div id="content">Answer{{ ans.id }}: {{ ans.answer }}</div>
-                {% endfor %}
-                </a>
-                <a href="" class="btn-2">
-                Play Again
-               </a>
-            </div>
-</body>
-
-</html>
+          <div><input type=checkbox class="option">A: {{ item.A }}</input> </div>
+          <div><input type=checkbox class="option">B: {{ item.B }}</input> </div>
+          <div><input type=checkbox class="option">C: {{ item.C }}</input> </div>
+          <div><input type=checkbox class="option">D: {{ item.D }}</input> </div>
+      <div>
+      {% endfor%}
+  <div class="ans"></div>
+  </div>
+  <div class="btn-box">
+      <a href="" class="btn-1">
+      <input type=checkbox id="show">
+      <label for="show">Submit</label>
+      {% for ans in quiz%}
+      <div id="content">Answer{{ ans.id }}: {{ ans.answer }}</div>
+      {% endfor %}
+      </a>
+      <a href="" class="btn-2">
+      Play Again
+      </a>
+  </div>
+{% endblock quiz %}
+{% endblock content %}

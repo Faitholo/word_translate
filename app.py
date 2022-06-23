@@ -12,11 +12,12 @@ import urllib.request, json
 from requests.adapters import HTTPAdapter
 from models import db, Quiz
 
-#s = requests.Session()
-#s.mount('https://api.cognitive.microsofttranslator.com', HTTPAdapter(max_retries=5))
+# Handle session timeouts
+s = requests.Session()
+s.mount('https://api.cognitive.microsofttranslator.com', HTTPAdapter(max_retries=5))
 
 from dotenv import load_dotenv
-load_dotenv('/home/faith/dictionary_api/.env')
+load_dotenv('/home/faith/word_translate/.env')
 
 
 app = Flask(__name__)
@@ -44,6 +45,7 @@ def after_request(response):
     return response
 
 """
+# Paginate db query results
 QUESTIONS_PER_PAGE = 1
 
 
@@ -62,37 +64,35 @@ def paginate(request, data):
 
 @app.route('/')
 def home():
-    
+    # Return homepage
     return render_template('index.html')
 
 
 @app.route('/translate', methods=['GET'])
-def get_word():
-    form = Language()
-    return render_template('translate.html', form=form)
+def index():
+    # Return translation page
+    return render_template('translate.html')
 
 
-@app.route('/translate', methods=['GET','POST'])
-def translate_word():
-    key = os.environ.get('key_var_name')
-    endpoint = "https://api.cognitive.microsofttranslator.com"
+@app.route('/translate', methods=['POST'])
+def index_post():
+    # Read the values from the form
+    original_text = request.form['text']
+    target_language = request.form['language']
 
-    # Add your location, also known as region. The default is global.
-    # This is required if using a Cognitive Services resource.
-    location = os.environ.get('region_var_name')
-    path = '/translate'
-    constructed_url = endpoint + path
+    # Load the values from .env
+    key = os.environ['KEY']
+    endpoint = os.environ['ENDPOINT']
+    location = os.environ['LOCATION']
 
-    form = Language()
-    to = form.translate.data
-    speech = form.lang.data
-    
-    params = {
-        'api-version': '3.0',
-        'from': 'en',
-        'to': to
-    }
+    # Indicate that we want to translate and the API version (3.0) and the target language
+    path = '/translate?api-version=3.0'
+    # Add the target language parameter
+    target_language_parameter = '&to=' + target_language
+    # Create the full URL
+    constructed_url = endpoint + path + target_language_parameter
 
+    # Set up the header information, which includes our subscription key
     headers = {
         'Ocp-Apim-Subscription-Key': key,
         'Ocp-Apim-Subscription-Region': location,
@@ -100,41 +100,36 @@ def translate_word():
         'X-ClientTraceId': str(uuid.uuid4())
     }
 
-    body = [{
-        'text': speech
-    }]
+    # Create the body of the request with the text to be translated
+    body = [{ 'text': original_text }]
 
+    # Make the call using post
+    translator_request = requests.post(constructed_url, headers=headers, json=body)
+    # Retrieve the JSON response
+    translator_response = translator_request.json()
+    # Retrieve the translation
+    translated_text = translator_response[0]['translations'][0]['text']
 
-    request = requests.post(constructed_url, params=params, headers=headers, json=body)
-    response = request.json()
-
-    get_data = json.dumps(response, sort_keys=True, skipkeys=True, ensure_ascii=False, indent=4, separators=(',', ': '))
-    data_response = json.loads(get_data)
-    
-    data = []
-    for item in data_response:
-        for each in item:
-            data1 = item[each]
-            for data2 in data1:
-                data3 = data2
-                
-                for each_item in data3:
-                    data.append(data3[each_item])
-
-    
-    return render_template('result.html', result=data, form=form)
-
+    # Call render template, passing the translated text,
+    # original text, and target language to the template
+    return render_template(
+        'result.html',
+        translated_text=translated_text,
+        original_text=original_text,
+        target_language=target_language
+    )
 
 
 @app.route('/create', methods=['GET'])
 def create_quiz():
+    # Get the form for adding quiz questions
   form = Question()
   return render_template('questions.html', form=form)
 
 @app.route('/create', methods=['POST'])
 def create_quiz_submission():
   
-  # Request data from the Venue Form
+  # Request data from the Question Form
   if request.method == "POST":
     form = Question()
     quiz = Quiz(question = form.question.data,
@@ -160,12 +155,12 @@ def create_quiz_submission():
 
 @app.route('/quiz', methods=['GET'])
 def play_quiz():
-    form = Question()
+    # Query the database to get all quiz questions
     all = Quiz.query.all()
     
     quiz = all
     
-    return render_template('quiz.html', form=form, quiz=quiz)
+    return render_template('quiz.html', quiz=quiz)
 
 
 
