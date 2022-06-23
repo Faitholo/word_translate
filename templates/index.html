@@ -1,23 +1,36 @@
 {% extends 'main.html' %}
 {% block content %} 
-
+<div class="slider_detail-box">
+  <div class="container">
+  <div id="about" class="about_section">
+  <blockquote><h2><u>Welcome to word translate!</u></h2></blockquote>
+  
+  <blockquote>
+    <h5>Here you can translate text from one language to another.</h5>
+  </blockquote>
+  <blockquote>
+    <h5>You can also check out our fun quiz to learn the meaning of some English words.</h5>
+  </blockquote>
+</div>
   <section class=" slider_section position-relative">
-    <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
-      <div class="container-fluid">
-        <div class="row">
-          <div class="col-md-4 offset-md-2">
+    
+      
+        
+          
             <div class="slider_detail-box">
               <div class="container">
                 <div class="btn-box">
                   <a href="/translate" class="btn-1">
-                    Translate
+                    <h3>Translate</h3>
                   </a>
                   <a href="/quiz" class="btn-2">
-                    Play Quiz
+                    <h3>Play Quiz</h3>
             </div>
           </div>
         </div>
       </div>
     </div>
+    
+  
         
 {% endblock content %}

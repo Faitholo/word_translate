@@ -9,6 +9,8 @@
 
 {% block quiz %}
   {% for item in quiz %}
+  <div class="slider_detail-box">
+    <div class="container">
       <p>Question: {{ item.id }}</p>
       <div>
           {{ item.question }}
@@ -18,10 +20,13 @@
           <div><input type=checkbox class="option">C: {{ item.C }}</input> </div>
           <div><input type=checkbox class="option">D: {{ item.D }}</input> </div>
       <div>
-      {% endfor%}
-  <div class="ans"></div>
+    </div>
   </div>
-  <div class="btn-box">
+      {% endfor%}
+  
+  </div>
+  <div class="slider_detail-box">
+    <div class="container">
       <a href="" class="btn-1">
       <input type=checkbox id="show">
       <label for="show">Submit</label>
@@ -32,6 +37,7 @@
       <a href="" class="btn-2">
       Play Again
       </a>
+    </div>
   </div>
 {% endblock quiz %}
 {% endblock content %}

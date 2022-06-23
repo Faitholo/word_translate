@@ -124,18 +124,6 @@ a:focus {
   background-size: cover;
   background-repeat: no-repeat;
 }
-.slider_section1 {
-  background-image: url(../img/main.jpg);
-  padding: 6% 0;
-  background-size: cover;
-  background-repeat: no-repeat;
-}
-.slider_section2 {
-  background-image: url(../img/quiz7.jpg);
-  padding: 6% 0;
-  background-size: cover;
-  background-repeat: no-repeat;
-}
 
 .slider_section .row {
   -webkit-box-align: center;
@@ -208,38 +196,6 @@ a:focus {
 
 .carousel-indicators .active {
   background-color: #010106;
-}
-
-.about_section {
-  background-image: url(../images/about-bg.png);
-  background-size: cover;
-}
-
-.about_section .row {
-  -webkit-box-align: baseline;
-      -ms-flex-align: baseline;
-          align-items: baseline;
-}
-
-.about_section .img-box img {
-  width: 100%;
-}
-
-.about_section .detail-box p {
-  margin: 25px 0;
-}
-
-.about_section .detail-box a {
-  display: inline-block;
-  padding: 10px 20px;
-  background-color: #023b48;
-  border: 1px solid #023b48;
-  color: #ffffff;
-}
-
-.about_section .detail-box a:hover {
-  background-color: transparent;
-  color: #023b48;
 }
 
 #show,#content {
