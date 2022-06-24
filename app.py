@@ -120,6 +120,54 @@ def index_post():
     )
 
 
+@app.route('/dictionary')
+def get_word():
+    return render_template('dict.html')
+
+@app.route('/dictionary', methods=['POST'])
+def define_word():
+    word = request.form['text']
+    url1 = "https://od-api.oxforddictionaries.com/api/v2/entries/en-gb/{}?fields=definitions&strictMatch=false".format(word)
+    url2 = "https://od-api.oxforddictionaries.com/api/v2/entries/en-gb/{}?fields=examples&strictMatch=false".format(word)
+    url3 = "https://od-api.oxforddictionaries.com/api/v2/entries/en-gb/{}?fields=domains&strictMatch=false".format(word)
+    
+    
+    r = requests.get(url1, headers = {"app_id": app_id, "app_key": app_key})
+    r2 = requests.get(url2, headers = {"app_id": app_id, "app_key": app_key})
+    r3 = requests.get(url3, headers = {"app_id": app_id, "app_key": app_key})
+    results = r.json()
+    results2 = r2.json()
+    results3 = r3.json()
+    
+    
+    data = []
+    data_input = {}
+    not_found = "Word not found"
+    
+    try:
+        defn = results["results"][0]["lexicalEntries"][0]["entries"][0]["senses"][0]["definitions"][0]
+        name = results3["id"]
+        example1 = results2["results"][0]["lexicalEntries"][0]["entries"][0]["senses"][0]["examples"][0]["text"]
+        lang = results["results"][0]["language"]
+        lex = results3["results"][0]["lexicalEntries"][0]["lexicalCategory"]["text"]
+        
+        data_input.update({'defn': defn,
+                           'word': name,
+                           'example': example1,
+                           'lang': lang,
+                           'lex': lex})
+    except IndexError:
+        return (not_found)
+    
+    except KeyError:
+        return(not_found)
+    finally:
+        data.append(data_input)
+    
+    return render_template('dict_result.html', data=data)
+
+
+
 @app.route('/create', methods=['GET'])
 def create_quiz():
     # Get the form for adding quiz questions

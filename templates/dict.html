@@ -1,0 +1,17 @@
+{% extends 'main.html' %}
+{% block content %} 
+ 
+  <title>Translator</title>
+    <div class="container">
+      <div>Enter the word or phrase to check it's meaning</div>
+      <div>
+          <form method="POST">
+              <div class="form-group">
+                  <textarea name="text" cols="20" rows="10" class="form-control"></textarea>
+              </div>
+                  <button type="submit" class="btn btn-success">Check</button>
+              </div>
+          </form>
+      </div>
+    </div>
+  {% endblock content %}
