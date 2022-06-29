@@ -26,7 +26,7 @@ app_id  = os.environ.get('ID')
 app_key  = os.environ.get('API_KEY2')
 app.secret_key = os.environ.get('SECRET_KEY')
 db_password = os.environ.get("DB_PASSWORD")
-DATABASE_URL = os.environ.get('DATABASE_URL')
+DATABASE_URL = os.environ.get('DATABASE_URL').replace("postgres://", "postgresql://", 1)
 
 #app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql:///Quiz'
 app.config['SQLALCHEMY_DATABASE_URI'] = DATABASE_URL
