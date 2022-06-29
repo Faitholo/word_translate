@@ -18,8 +18,9 @@
             <p><strong>Language: </strong>{{ items["lang"] }}</p>
             <p><strong>Lexical Form: </strong>{{ items["lex"] }}</p>
             {% endfor %}
+            <p><strong>Pronunciation: </strong><a href="{{ pron }}">Download</a></p>
         </div>
-
+        
             <a href="{{ url_for('get_word') }}">Try another one!</a>
         </div>
     </div>

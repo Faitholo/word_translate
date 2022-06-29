@@ -1,0 +1,18 @@
+{% extends 'main.html'%}
+{% block content%}
+<div class="slider_detail-box">
+    <div class="container">
+      <p>For each of the questions below, choose the word that best describes the underlined meaning</p>
+        {% for item in quiz %}
+    
+        <div><u>{{ item.id }}.  {{ item.question }}</u></div>
+        <div><input type=radio class="option"> {{ item.A }}</input> </div>
+        <div><input type=radio class="option"> {{ item.B }}</input> </div>
+        <div><input type=radio class="option"> {{ item.C }}</input> </div>
+        <div><input type=radio class="option"> {{ item.D }}</input> </div>
+        <div><p>Answer: {{ item.answer }}</p></div>
+        {% endfor %}
+    </div>
+</div>
+        
+{%endblock content%}

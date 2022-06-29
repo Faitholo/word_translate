@@ -33,7 +33,7 @@ body {
 }
 
 .custom_heading span {
-  color: #21d7ff;
+  color: #0f1516;
 }
 
 /*header section*/
@@ -159,7 +159,7 @@ a:focus {
 
 .slider_detail-box .btn-box .btn-1:hover {
   background-color: transparent;
-  color: #023b48;
+  color: #070a0a;
 }
 
 .slider_detail-box .btn-box .btn-2 {
@@ -167,7 +167,7 @@ a:focus {
   padding: 10px 45px;
   background-color: #ffffff;
   border: 1px solid #ffffff;
-  color: #023b48;
+  color: #090e0f;
 }
 
 .slider_detail-box .btn-box .btn-2:hover {

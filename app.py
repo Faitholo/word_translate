@@ -130,14 +130,19 @@ def define_word():
     url1 = "https://od-api.oxforddictionaries.com/api/v2/entries/en-gb/{}?fields=definitions&strictMatch=false".format(word)
     url2 = "https://od-api.oxforddictionaries.com/api/v2/entries/en-gb/{}?fields=examples&strictMatch=false".format(word)
     url3 = "https://od-api.oxforddictionaries.com/api/v2/entries/en-gb/{}?fields=domains&strictMatch=false".format(word)
+    url4 = "https://od-api.oxforddictionaries.com/api/v2/entries/en-gb/{}?fields=pronunciations&strictMatch=false".format(word)
     
     
     r = requests.get(url1, headers = {"app_id": app_id, "app_key": app_key})
     r2 = requests.get(url2, headers = {"app_id": app_id, "app_key": app_key})
     r3 = requests.get(url3, headers = {"app_id": app_id, "app_key": app_key})
+    r4 = requests.get(url4, headers = {"app_id": app_id, "app_key": app_key})
+    
+    
     results = r.json()
     results2 = r2.json()
     results3 = r3.json()
+    results4 = r4.json()
     
     
     data = []
@@ -150,6 +155,7 @@ def define_word():
         example1 = results2["results"][0]["lexicalEntries"][0]["entries"][0]["senses"][0]["examples"][0]["text"]
         lang = results["results"][0]["language"]
         lex = results3["results"][0]["lexicalEntries"][0]["lexicalCategory"]["text"]
+        pron = results4["results"][0]["lexicalEntries"][0]["entries"][0]["pronunciations"][0]["audioFile"]
         
         data_input.update({'defn': defn,
                            'word': name,
@@ -164,7 +170,7 @@ def define_word():
     finally:
         data.append(data_input)
     
-    return render_template('dict_result.html', data=data)
+    return render_template('dict_result.html', data=data, pron=pron)
 
 
 
@@ -202,13 +208,23 @@ def create_quiz_submission():
  
 
 @app.route('/quiz', methods=['GET'])
-def play_quiz():
+def get_quiz():
     # Query the database to get all quiz questions
     all = Quiz.query.all()
     
     quiz = all
     
     return render_template('quiz.html', quiz=quiz)
+
+
+@app.route('/quiz', methods=['POST'])
+def play_quiz():
+    # Query the database to get all quiz questions
+    all = Quiz.query.all()
+    
+    quiz = all
+    
+    return render_template('answer.html', quiz=quiz)
 
 
 

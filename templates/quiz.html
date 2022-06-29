@@ -1,43 +1,23 @@
-{% extends 'main.html' %}
-{% block head %}
-<style>
+{% extends 'main.html'%}
+{% block content%}
+<div class="slider_detail-box">
+  <div class="container">
+    <p>For each of the questions below, choose the word that best describes the underlined meaning</p>
+      {% for item in quiz %}
   
-</style>
-{% endblock head%}
+      <div><u>{{ item.id }}.  {{ item.question }}</u></div>
+      <div><input type=radio class="option"> {{ item.A }}</input> </div>
+      <div><input type=radio class="option"> {{ item.B }}</input> </div>
+      <div><input type=radio class="option"> {{ item.C }}</input> </div>
+      <div><input type=radio class="option"> {{ item.D }}</input> </div>
 
-{% block content %} 
-
-{% block quiz %}
-  {% for item in quiz %}
-  <div class="slider_detail-box">
-    <div class="container">
-      <p>Question: {{ item.id }}</p>
-      <div>
-          {{ item.question }}
-          </div>
-          <div><input type=checkbox class="option">A: {{ item.A }}</input> </div>
-          <div><input type=checkbox class="option">B: {{ item.B }}</input> </div>
-          <div><input type=checkbox class="option">C: {{ item.C }}</input> </div>
-          <div><input type=checkbox class="option">D: {{ item.D }}</input> </div>
-      <div>
-    </div>
-  </div>
       {% endfor%}
-  
-  </div>
-  <div class="slider_detail-box">
-    <div class="container">
-      <a href="" class="btn-1">
-      <input type=checkbox id="show">
-      <label for="show">Submit</label>
-      {% for ans in quiz%}
-      <div id="content">Answer{{ ans.id }}: {{ ans.answer }}</div>
-      {% endfor %}
-      </a>
-      <a href="" class="btn-2">
-      Play Again
-      </a>
     </div>
   </div>
-{% endblock quiz %}
-{% endblock content %}
+  
+  <div class="container">
+  <form method="POST" action="/quiz">
+    <input type="submit" value="Submit">
+  </form>
+  </div>
+{%endblock content%}
