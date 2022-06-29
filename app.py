@@ -28,7 +28,7 @@ app.secret_key = os.environ.get('SECRET_KEY')
 db_password = os.environ.get("DB_PASSWORD")
 
 #app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql:///Quiz'
-app.config['SQLALCHEMY_DATABASE_URI'] = 'postgres://hwbjpptpnxwont:7f3e5cf5a00cfb46e8981216b324317d205d88cd08ec514fe90b6126b38a5206@ec2-23-23-151-191.compute-1.amazonaws.com:5432/d9gk850om0pqfj'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://hwbjpptpnxwont:7f3e5cf5a00cfb46e8981216b324317d205d88cd08ec514fe90b6126b38a5206@ec2-23-23-151-191.compute-1.amazonaws.com:5432/d9gk850om0pqfj'
 db = SQLAlchemy(app)
 migrate = Migrate(app, db)
 CORS(app, resources={r"/api/*": {"origins": "*"}})
